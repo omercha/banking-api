@@ -26,6 +26,13 @@ public class AccountController {
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
 
+    // delete bank account
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAccount(@PathVariable Long id) {
+        accountService.deleteAccount(id);
+        return ResponseEntity.ok("Successfully deleted account.");
+    }
+
     // retrieve details for a specific bank account
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountByID(@PathVariable Long id){
