@@ -42,7 +42,22 @@ public class AccountServiceImpl implements AccountService {
             Account savedAccount = accountRepository.save(account);
             return AccountMapper.mapToAccountDto(savedAccount);
         } else {
-            throw new RuntimeException("Invalid deposit amount, please enter a value greater than 0.");
+            throw new RuntimeException("Invalid deposit amount.");
+        }
+    }
+
+    @Override
+    public AccountDto withdraw(Long id, double amount) {
+        Account account = accountRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Account not found."));
+        if (amount < account.getBalance() && amount > 0) {
+            double updatedBalance = account.getBalance() - amount;
+            account.setBalance(updatedBalance);
+            Account savedAccount = accountRepository.save(account);
+            return AccountMapper.mapToAccountDto(savedAccount);
+        } else {
+            throw new RuntimeException("Invalid withdrawal amount.");
         }
     }
 
