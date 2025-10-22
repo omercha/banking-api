@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
+// rest APIs to manage bank accounts
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
@@ -24,14 +26,21 @@ public class AccountController {
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
 
-    // retrieve specific account details by ID
+    // retrieve details for a specific bank account
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountByID(@PathVariable Long id){
         AccountDto accountDto = accountService.getAccountByID(id);
         return ResponseEntity.ok(accountDto);
     }
 
-    // deposit
+    // retrieve details for all bank accounts
+    @GetMapping
+    public ResponseEntity<List<AccountDto>> getAllAccounts(){
+        List<AccountDto> accounts = accountService.getAllAccounts();
+        return ResponseEntity.ok(accounts);
+    }
+
+    // deposit into a specific bank account
     @PutMapping("/{id}/deposit")
     public ResponseEntity<AccountDto> deposit(@PathVariable Long id, @RequestBody Map<String, Double> request){
 
@@ -40,7 +49,7 @@ public class AccountController {
         return ResponseEntity.ok(accountDto);
     }
 
-    // withdraw
+    // withdraw from a specific bank account
     @PutMapping("/{id}/withdraw")
     public ResponseEntity<AccountDto> withdraw(@PathVariable Long id, @RequestBody Map<String, Double> request){
 
