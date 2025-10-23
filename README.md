@@ -7,7 +7,6 @@ A simple Spring Boot project built to learn the framework by modelling core bank
 * Java (Spring Boot)
 * PostgreSQL
 * Postman
-* Docker
 
 ## Current API Endpoints
 
